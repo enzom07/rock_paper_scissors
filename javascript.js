@@ -1,3 +1,9 @@
+var total=0;
+var result = "";
+var contwin = 0;
+var contlose= 0
+
+
 function computerPlay(){
 
 
@@ -56,6 +62,14 @@ function playRound(playerSelection, computerSelection) {
      else if(playerselect === "ROCK" && computerselect === "PAPER" ){
 
           console.log("You Lose! Paper beats Rock");
+          console.log(playerselect+" "+computerselect);
+          return("lose");
+
+     }
+     else if(playerselect === "PAPER" && computerselect === "SCISSORS" ){
+
+          console.log("You Lose! Scissors beats Paper");
+          console.log(playerselect+" "+computerselect);
           return("lose");
 
      }
@@ -63,12 +77,21 @@ function playRound(playerSelection, computerSelection) {
      else if(playerselect === "ROCK" && computerselect === "SCISSORS" ){
 
           console.log("You Win! Rock beats Scissors");
+          console.log(playerselect+" "+computerselect);
           return("win");
 
      }
      else if(playerselect === "PAPER" && computerselect === "ROCK" ){
 
           console.log("You Win! Paper beats Rock");
+          console.log(playerselect+" "+computerselect);
+          return("win");
+
+     }
+     else if(playerselect === "SCISSORS" && computerselect === "PAPER" ){
+
+          console.log("You Win! Scissors beats Paper");
+          console.log(playerselect+" "+computerselect);
           return("win");
 
      }
@@ -76,6 +99,7 @@ function playRound(playerSelection, computerSelection) {
      else {
 
           console.log("You didn't input a valid value");
+          console.log(playerselect+" "+computerselect);
           return("undefinied");
      }
 
@@ -83,54 +107,79 @@ function playRound(playerSelection, computerSelection) {
    }
 
 
-function playerSelection(){
+/*function playerSelection(){
 
           let selected = prompt("Input Rock/Paper/Scissors:");
           return selected;
 
-}
+}*/
 
+     //Select all buttons elements
+     const buttons = document.querySelectorAll('button');
+     //Create divs in memory
+     const div = document.createElement('div');  
+     
+     buttons.forEach((button) => {
 
-   function game(){
+          // and for each one we add a 'click' listener
+          button.addEventListener('click', () => {
+     
+            result = playRound(button.id,computerPlay());
+            if(result === "undefinied"){
 
-          var result = "";
-          var contwin = 0;
-          var contlose= 0
+               console.log("jugador ingresa valor no valido,apriete again");
+               div.textContent = 'Player:'+ contwin + "||"+ 'Computer:'+ contlose; 
+            }
+            else if(result === "lose"){
 
-          for(let i=0; i<5; i++){
+               contlose++;
+               total++;
+               div.textContent = 'Player:'+ contwin + "||"+ 'Computer:'+ contlose; 
 
-                    result = playRound(playerSelection(),computerPlay());
-                    if(result === "win"){
+           }
+           else if(result === "draw"){
 
-                         contwin++;
+               
+               div.textContent = 'Player:'+ contwin + "||"+ 'Computer:'+ contlose; 
 
-                    }
-                    else if(result === "lose"){
+           }
+           else if(result === "win"){
 
-                         contlose++;
+               contwin++;
+               total++;
+               div.textContent = 'Player:'+ contwin + "||"+ 'Computer:'+ contlose; 
 
-                    }
+           }
+           if(total === 5){ 
+               if(contwin > contlose){
 
-          }
+                    total=0;
+                    contwin=0;
+                    contlose=0;
+                    console.log("The Player win the game!");
+                    
+               }
+               else if(contwin < contlose){
 
-          if(contwin > contlose){
+                    total=0;
+                    contwin=0;
+                    contlose=0;
+                    console.log("The Player lose the game!");
+                    
+               }
+               else{
 
-               return("The Player win the game!");
-          }
-          else if(contwin < contlose){
-
-               return("The Player lose the game!");
-          }
-          else{
-
-               return("The game is a Draw!");
-          }
-
-   }
-
-
+                    total=0;
+                    contwin=0;
+                    contlose=0;
+                    console.log("The game is a Draw!");
+                    
+          }             
+     }          
+          });
+        });
 
    
    //const playerSelection = "rock";
    //const computerSelection = computerPlay();
-   console.log(game());
+   //console.log(game());
